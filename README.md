@@ -1,17 +1,11 @@
-** How to add a custom initialiser in UIViewController
+# Custom initializers for subclasses of UIViewController
 
-As an iOS developer, you might want to use custom initialiser from time to time to control dependency injection. When adding a custom initialiser to UIViewController, you need to consider 3 different cases and I will cover all of them.
+First of all, what is custom initialization?
 
-1. Initialising UIViewController programmatically
-2. Initialising UIViewController using XIB
-3. Initialising UIViewController from storyboard 
-
-First of all, what is a custom initialiser?
-
-Custom initialisation can fall into these 2 different cases. From my experience, 경우는 드물었다 that I need to override the initialiser of superview. I think I only have created new initialiser rather than overriding.
+Custom initialization can fall into 2 different cases, when creating a new initializer and overriding UIViewController initializer. From my experience, It's rare that I need to override the initializer of UIViewController. I think I only have created new initializers rather than overriding.
 
 
-1. Creating a new designated(?) initialiser
+1. Creating a new designated(?) initializer
 ```Swift
 class CustomViewController: UIViewController {
     let name: String
@@ -22,21 +16,31 @@ class CustomViewController: UIViewController {
 }
 ```
 
-2. Overriding a initialiser of super
+2. Overriding a initializer of super
 ```Swift
 override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     <#code#>
 }
 ```
 
-For all three cases when you provide custom initialisers, Xcode will complain you should provide require init?(coder: NSCoder) which is used to create UIViewController from storyboard. The decoder, NSCoder is related to the Interface Builder. Xcode translate everything you set and do in Interface builder to code under the hood.
+## How to add a custom initializer
+
+As an iOS developer, you might want to use custom initializer in your UIViewController subclass from time to time to control dependency injection. When adding a custom initializer to UIViewController, you need to consider 3 different cases and I will cover all of them.
+
+1. Initializing UIViewController programmatically
+2. Initializing UIViewController using XIB
+3. Initializing UIViewController from storyboard 
+
+
+### required initialzer
+For all three cases when you write custom initializers, Xcode will complain you should provide require init?(coder: NSCoder) which is used to create UIViewController from storyboard. The decoder, NSCoder is related to the Interface Builder. Xcode translate everything you set and do in Interface builder to code under the hood.
 ￼<p align = "left">
 <img src = "Initialisers/Images/requiredInitErr.png">
 </p>
-You need to implement required initialiser regardless of you are using storyboard or not, because the initialiser marked as required by super view.
+You need to implement required initializer regardless of you are using storyboard or not, because it is marked as required by super view.
 
-If you are not using storyboards or your view controller has properties to be initialised, you implement below.
-This won’t be crashing because this will be never called by storyboard.
+If you are not using storyboards or your view controller has properties to be initialized, you implement below.
+This won’t be crashing because this will never be called by storyboard.
 ```Swift
 required init?(coder aDecoder: NSCoder) {
     fatalError("We aren't using storyboards")
@@ -51,24 +55,25 @@ required init?(coder aDecoder: NSCoder) {
 }
 ```
 
+Keeping this required init in mind, what you need to do for each case.
 
-1.  In case you write custom initialiser for programatically created UIViewController.
+### 1. The programmatically created custom initializer for a subclass of UIViewController.
 ```Swift
 init(name: String) {
     self.name = name
 }
 ```
-After initializing custom class you should call designated initialiser of super to initilize its own properties.
+After initializing custom class you should call designated initializer of super to initilize its own properties.
 ￼<p align = "left">
 <img src = "Initialisers/Images/superInitErr.png">
 </p>
 
-You should call the designated initialiser for UIViewController, initWithNibName:bundle:
+You should call the designated initializer for UIViewController, initWithNibName:bundle:
 ￼<p align = "left">
 <img src = "Initialisers/Images/initNameStringErr.png">
 </p>
 
-Results
+The final result is
 ```Swift
 ￼class CodeBasedViewController: UIViewController {
 
@@ -85,8 +90,8 @@ Results
 }
 ```
 
-2. When you write custom initialiser for xib based UIViewController
-Adding custom initialiser to XIB based UIViewController is pretty similar
+### 2. The custom initializer for a XIB based UIViewController
+Adding custom initializer to XIB based UIViewController is pretty similar
 
 ```Swift
 class XIBBasedViewController: UIViewController {
@@ -105,16 +110,18 @@ required init?(coder: NSCoder) {
 ```
 
 
-3. You can’t use custom initialiser with storyboard in iOS 12 and earlier.
-In iOS 13 and later, however, Apple provides a way to use custom initializer for a Storyboard based UIViewController with some limitations. i.e(That is) you can’t use this on relationship segue like navigation controller root view
+### 3. The custom initializer for a UIViewController subclass from storyboard 
+In iOS 12 and earlier, you can't use custom initializers for a UIViewController subclass created from storyboard.
+In iOS 13 and later, however, Apple provides a way to use custom initializers for a Storyboard based UIViewController with some limitations. -i.e., you can’t use this on relationship segue like navigation controller root view.
+
 https://sarunw.com/posts/better-dependency-injection-for-storyboards-in-ios13/
 
 
-How to add a convenience initialiser in UIViewController
+## How to add a convenience initializer in UIViewController
 
-Convenience Initialisers are in addition to designated initialisers rather than a replacement.
+Convenience initializers are in addition to designated initializers rather than a replacement.
 
-Convenience initialisers should end up with calling designated initialisers. Make sure your properties have default values or are optionals to call self.init().
+Convenience initializers should end up with calling designated initializers. Make sure your properties have default values or are optionals to call self.init().
 ￼
 ```Swift
 private var initialData: String = ""
