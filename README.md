@@ -134,3 +134,11 @@ convenience init(initialData: String) {
     print("convenience init")
 }
 ```
+
+
+### References
+- [Swift: required init decoder](https://medium.com/@CoderLyn/swift-required-init-decoder-b3aa829b4acf)
+- [Required initializers vs overriding designated initializers](https://stackoverflow.com/a/46927538/12395269)
+- [Better Dependency Injection](https://sarunw.com/posts/better-dependency-injection-for-storyboards-in-ios13/)
+- [Creating UIViewController without storyboard](https://samwize.com/2018/01/31/guide-to-creating-uiviewcontroller-without-storyboard/)
+- [iOS: View Controller Data Injection with Storyboards and Segues in Swift](https://www.natashatherobot.com/ios-view-controller-data-injection-with-storyboards-and-segues-in-swift/)
