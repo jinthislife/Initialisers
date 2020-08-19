@@ -96,16 +96,17 @@ Adding custom initializer to XIB based UIViewController is pretty similar
 ```Swift
 class XIBBasedViewController: UIViewController {
 
-@IBOutlet weak var titleLabel: UILabel!
-private let titleData: String
+    @IBOutlet weak var titleLabel: UILabel!
+    private let titleData: String
 
-init(data: String) {
-    self.titleData = data
-    super.init(nibName: nil, bundle: nil)
-}
+    init(data: String) {
+        self.titleData = data
+        super.init(nibName: nil, bundle: nil)
+    }
 
-required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 ```
 
