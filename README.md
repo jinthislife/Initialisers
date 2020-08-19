@@ -1,4 +1,4 @@
-How to add a custom initialiser in UIViewController
+** How to add a custom initialiser in UIViewController
 
 As an iOS developer, you might want to use custom initialiser from time to time to control dependency injection. When adding a custom initialiser to UIViewController, you need to consider 3 different cases and I will cover all of them.
 
@@ -13,7 +13,8 @@ Custom initialisation can fall into these 2 different cases. From my experience,
 
 1. Creating a new designated(?) initialiser
 ```Swift
-Class CustomViewController: UIViewController {     let name: String
+class CustomViewController: UIViewController {
+    let name: String
     
     init(name: String) {
         self.name = name
@@ -23,14 +24,14 @@ Class CustomViewController: UIViewController {     let name: String
 
 2. Overriding a initialiser of super
 ```Swift
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        <#code#>
-    }
+override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    <#code#>
+}
 ```
 
 For all three cases when you provide custom initialisers, Xcode will complain you should provide require init?(coder: NSCoder) which is used to create UIViewController from storyboard. The decoder, NSCoder is related to the Interface Builder. Xcode translate everything you set and do in Interface builder to code under the hood.
 ￼<p align = "left">
-<img src = "Images/requiredInitErr.png" width="230">
+<img src = "Initialisers/Images/requiredInitErr.png">
 </p>
 You need to implement required initialiser regardless of you are using storyboard or not, because the initialiser marked as required by super view.
 
@@ -59,27 +60,28 @@ init(name: String) {
 ```
 After initializing custom class you should call designated initialiser of super to initilize its own properties.
 ￼<p align = "left">
-<img src = "Images/superInitErr.png" width="230">
+<img src = "Initialisers/Images/superInitErr.png">
 </p>
 
 You should call the designated initialiser for UIViewController, initWithNibName:bundle:
 ￼<p align = "left">
-<img src = "Images/initNameStringErr.png" width="230">
+<img src = "Initialisers/Images/initNameStringErr.png">
 </p>
 
 Results
 ```Swift
 ￼class CodeBasedViewController: UIViewController {
 
-private let data: String
+    private let data: String
 
-init(data: String, viewModel: String? = nil) {
-    self.data = data
-    super.init(nibName: nil, bundle:nil)
-}
+    init(data: String, viewModel: String? = nil) {
+        self.data = data
+        super.init(nibName: nil, bundle:nil)
+    }
 
-required init?(coder: NSCoder) {
-    fatalError("Never will happen")
+    required init?(coder: NSCoder) {
+        fatalError("Never will happen")
+    }
 }
 ```
 
