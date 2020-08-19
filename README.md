@@ -77,10 +77,10 @@ The final result is
 ```Swift
 ￼class CodeBasedViewController: UIViewController {
 
-    private let data: String
+    private let name: String
 
-    init(data: String, viewModel: String? = nil) {
-        self.data = data
+    init(name: String) {
+        self.name = name
         super.init(nibName: nil, bundle:nil)
     }
 
