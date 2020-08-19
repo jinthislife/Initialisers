@@ -32,7 +32,7 @@ As an iOS developer, you might want to use custom initializer in your UIViewCont
 3. Initializing UIViewController from storyboard 
 
 
-### required initialzer
+### Required initialzer
 For all three cases when you write custom initializers, Xcode will complain you should provide require init?(coder: NSCoder) which is used to create UIViewController from storyboard. The decoder, NSCoder is related to the Interface Builder. Xcode translate everything you set and do in Interface builder to code under the hood.
 ￼<p align = "left">
 <img src = "Initialisers/Images/requiredInitErr.png">
